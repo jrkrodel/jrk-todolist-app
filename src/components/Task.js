@@ -9,6 +9,7 @@ import {
   Divider,
   Popup,
   Icon,
+  Container,
 } from "semantic-ui-react";
 
 import EditTaskForm from "../components/EditTaskForm";
@@ -85,8 +86,8 @@ const Task = ({
                     ""
                   )}
                 </Label>
-                {due ? (
-                  <Label size="big">
+                {due && completed === false ? (
+                  <Label circular size="medium">
                     <Icon name="calendar"></Icon>
                     {due}
                   </Label>
@@ -100,6 +101,7 @@ const Task = ({
                         defaultChecked
                         onClick={completeTask}
                         toggle
+                        size="big"
                         label="&nbsp;&nbsp;&nbsp;"
                       ></Checkbox>
                     }
@@ -113,6 +115,7 @@ const Task = ({
                       <Checkbox
                         onClick={completeTask}
                         toggle
+                        size="big"
                         label="&nbsp;&nbsp;&nbsp;"
                       ></Checkbox>
                     }
@@ -126,11 +129,13 @@ const Task = ({
                   onClick={deleteCurrentTask}
                   icon="trash"
                   color="red"
+                  size="small"
                 ></Button>
                 <Button
                   onClick={currentlyEditingHandler}
                   icon="pencil"
                   color="orange"
+                  size="small"
                 ></Button>
               </Grid.Column>
             </Grid>
