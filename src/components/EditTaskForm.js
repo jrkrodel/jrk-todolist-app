@@ -9,58 +9,55 @@ import {
   Input,
 } from "semantic-ui-react";
 
-const NewTaskForm = ({ closeNewTask, newTask, setNewTask, addNewTask }) => {
-  function changeNewTask(e, { value, name }) {
-    const newTaskClone = { ...newTask };
-    newTaskClone[name] = value;
-    setNewTask(newTaskClone);
+const EditTaskForm = ({ editTask, setEditTask, submitEdit, cancelEdit }) => {
+  function editSelectedTask(e, { value, name }) {
+    const newEdit = { ...editTask };
+    newEdit[name] = value;
+    setEditTask(newEdit);
   }
-
   return (
     <React.Fragment>
       <Segment padded>
-        <Header dividing as="h2">
-          Add New Task
+        <Header color={editTask.color} dividing as="h2">
+          Edit Task - {editTask.name}
         </Header>
         <Form>
           <Form.Field
             control={Input}
             name="name"
-            label="Task Name:"
+            label="Edit Task Name:"
             placeholder="Enter task name..."
-            value={newTask.name}
-            onChange={changeNewTask}
+            value={editTask.name}
+            onChange={editSelectedTask}
           />
           <Form.Field
             control={Input}
             name="due"
-            label="Due Date:"
-            placeholder="Enter Due Date..."
-            value={newTask.due}
-            onChange={changeNewTask}
+            label="Edit Due Date:"
+            placeholder="Enter due date..."
+            value={editTask.due}
+            onChange={editSelectedTask}
           />
           <Form.Field
             name="color"
+            value={editTask.color}
+            onChange={editSelectedTask}
             control={Select}
-            label="Task Color:"
+            label="Edit Task Color:"
             placeholder="Choose task color..."
             options={[
               { text: "Red", value: "red" },
               { text: "Yellow", value: "yellow" },
               { text: "Green", value: "green" },
-              { text: "Orange", value: "orange" },
-              { text: "Blue", value: "blue" },
             ]}
-            value={newTask.color}
-            onChange={changeNewTask}
           />
           <Button.Group fluid>
-            <Button type="button" color="red" onClick={closeNewTask}>
+            <Button onClick={cancelEdit} color="red">
               Cancel
             </Button>
             <Button.Or />
-            <Button onClick={addNewTask} type="button" color="green">
-              Add Task
+            <Button color="green" onClick={submitEdit}>
+              Submit Edit
             </Button>
           </Button.Group>
         </Form>
@@ -69,4 +66,4 @@ const NewTaskForm = ({ closeNewTask, newTask, setNewTask, addNewTask }) => {
   );
 };
 
-export default NewTaskForm;
+export default EditTaskForm;

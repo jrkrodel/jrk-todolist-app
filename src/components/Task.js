@@ -7,36 +7,137 @@ import {
   Button,
   Checkbox,
   Divider,
+  Popup,
+  Icon,
 } from "semantic-ui-react";
 
-const Task = ({ name, color, editTask, index }) => {
-  // console.log(name, color);
+import EditTaskForm from "../components/EditTaskForm";
+const Task = ({
+  name,
+  color,
+  due,
+  completed,
+  index,
+  deleteTask,
+  list,
+  setList,
+  completeTaskHandler,
+}) => {
+  function deleteCurrentTask() {
+    deleteTask(index);
+  }
 
-  function editCurrentTask() {
-    editTask(index);
+  function submitEdit() {
+    const listClone = [...list];
+    listClone.splice(index, 1, editTask);
+    setList(listClone);
+    setCurrentlyEditing(!currentlyEditing);
+  }
+
+  function cancelEdit() {
+    const listClone = [...list];
+    setList(listClone);
+    setCurrentlyEditing(!currentlyEditing);
+  }
+
+  const [currentlyEditing, setCurrentlyEditing] = React.useState(false);
+  const [editTask, setEditTask] = React.useState({
+    name: "",
+    color: "",
+    due: "",
+  });
+
+  function currentlyEditingHandler() {
+    setEditTask({
+      name: name,
+      color: color,
+      due: due,
+    });
+    setCurrentlyEditing(!currentlyEditing);
+  }
+
+  function completeTask() {
+    completeTaskHandler(index);
   }
 
   return (
     <React.Fragment>
-      <List.Item>
-        <Grid verticalAlign="middle" columns="2">
-          <Grid.Column>
-            <Label color={color} size="big">
-              {name}
-            </Label>
-          </Grid.Column>
-          <Grid.Column textAlign="right">
-            <Checkbox toggle label="&nbsp;&nbsp;&nbsp;"></Checkbox>
-            <Button icon="trash" color="red"></Button>
-            <Button
-              onClick={editCurrentTask}
-              icon="pencil"
-              color="orange"
-            ></Button>
-          </Grid.Column>
-        </Grid>
-      </List.Item>
-      <Divider></Divider>
+      {currentlyEditing ? (
+        <EditTaskForm
+          currentlyEditingHandler={currentlyEditingHandler}
+          editTask={editTask}
+          setEditTask={setEditTask}
+          submitEdit={submitEdit}
+          cancelEdit={cancelEdit}
+        />
+      ) : (
+        <React.Fragment>
+          <List.Item>
+            <Grid verticalAlign="middle" columns="2">
+              <Grid.Column>
+                <Label color={color} size="big">
+                  {name}
+                  {completed ? (
+                    <Label.Detail>
+                      <Icon name="checkmark box" />
+                    </Label.Detail>
+                  ) : (
+                    ""
+                  )}
+                </Label>
+                {due ? (
+                  <Label size="big">
+                    <Icon name="calendar"></Icon>
+                    {due}
+                  </Label>
+                ) : null}
+              </Grid.Column>
+              <Grid.Column textAlign="right">
+                {completed ? (
+                  <Popup
+                    trigger={
+                      <Checkbox
+                        defaultChecked
+                        onClick={completeTask}
+                        toggle
+                        label="&nbsp;&nbsp;&nbsp;"
+                      ></Checkbox>
+                    }
+                    content="Complete Task?"
+                    basic
+                    position="left center"
+                  ></Popup>
+                ) : (
+                  <Popup
+                    trigger={
+                      <Checkbox
+                        onClick={completeTask}
+                        toggle
+                        label="&nbsp;&nbsp;&nbsp;"
+                      ></Checkbox>
+                    }
+                    content="Complete Task?"
+                    basic
+                    position="left center"
+                  ></Popup>
+                )}
+
+                <Button
+                  onClick={deleteCurrentTask}
+                  icon="trash"
+                  color="red"
+                ></Button>
+                <Button
+                  onClick={currentlyEditingHandler}
+                  icon="pencil"
+                  color="orange"
+                ></Button>
+              </Grid.Column>
+            </Grid>
+          </List.Item>
+          <Divider></Divider>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };
