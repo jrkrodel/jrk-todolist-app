@@ -105,6 +105,7 @@ const Task = ({
                         label="&nbsp;&nbsp;&nbsp;"
                       ></Checkbox>
                     }
+                    on="click"
                     content="Complete Task?"
                     basic
                     position="left center"
@@ -119,6 +120,7 @@ const Task = ({
                         label="&nbsp;&nbsp;&nbsp;"
                       ></Checkbox>
                     }
+                    on="click"
                     content="Complete Task?"
                     basic
                     position="left center"
