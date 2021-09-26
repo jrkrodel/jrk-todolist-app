@@ -33,7 +33,7 @@ const HomePage = () => {
   const [totalTaskCompleted, setTotalTaskCompleted] = React.useState(0);
   const [totalTaskMade, setTotalTaskMade] = React.useState(0);
   const [totalTaskDeleted, setTotalTaskDeleted] = React.useState(0);
-  const [showStats, setShowStats] = React.useState(true);
+  const [showStats, setShowStats] = React.useState(false);
 
   function openNewTask() {
     setNewTaskOpen(true);
