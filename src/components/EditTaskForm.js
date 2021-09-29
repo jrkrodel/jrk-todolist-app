@@ -49,6 +49,8 @@ const EditTaskForm = ({ editTask, setEditTask, submitEdit, cancelEdit }) => {
               { text: "Red", value: "red" },
               { text: "Yellow", value: "yellow" },
               { text: "Green", value: "green" },
+              { text: "Orange", value: "orange" },
+              { text: "Blue", value: "blue" },
             ]}
           />
           <Button.Group fluid>
