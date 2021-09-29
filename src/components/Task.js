@@ -53,6 +53,7 @@ const Task = ({
       name: name,
       color: color,
       due: due,
+      completed: completed,
     });
     setCurrentlyEditing(!currentlyEditing);
   }
